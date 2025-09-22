@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Bacterial Wilt rule",
+    "conditions": {
+      "leaf_color": "brown",
+      "spots": "yes",
+      "wilt": "yes"
+    },
+    "disease": "Bacterial Wilt",
+    "confidence": 0.95,
+    "advice": "Remove infected plants and improve drainage. Use certified disease-free seeds."
+  },
+  {
+    "name": "Leaf Spot rule",
+    "conditions": {
+      "spots": "yes",
+      "wilt": "no"
+    },
+    "disease": "Leaf Spot",
+    "confidence": 0.85,
+    "advice": "Prune affected leaves and apply fungicide as recommended."
+  },
+  {
+    "name": "Root Rot rule",
+    "conditions": {
+      "wilt": "yes",
+      "leaf_color": "brown"
+    },
+    "disease": "Root Rot",
+    "confidence": 0.9,
+    "advice": "Improve soil drainage, avoid overwatering."
+  },
+  {
+    "name": "Nutrient Deficiency rule",
+    "conditions": {
+      "leaf_color": "yellow",
+      "spots": "no"
+    },
+    "disease": "Nutrient Deficiency",
+    "confidence": 0.7,
+    "advice": "Test soil and amend with appropriate fertilizer."
+  },
+  {
+    "name": "Viral Infection rule",
+    "conditions": {
+      "spots": "yes",
+      "leaf_color": "green",
+      "wilt": "yes"
+    },
+    "disease": "Viral Infection",
+    "confidence": 0.8,
+    "advice": "Remove infected plants and control insect vectors."
+  }
+]

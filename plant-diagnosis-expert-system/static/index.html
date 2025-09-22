@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Plant Diagnosis - Mini Expert System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 720px; margin: 2rem auto; padding: 1rem; }
+    label { display:block; margin-top:0.75rem; }
+    select, button { padding:0.5rem; font-size:1rem; }
+    .result { margin-top:1rem; padding:1rem; border-radius:8px; background:#f4f4f4; }
+  </style>
+</head>
+<body>
+  <h1>Plant Diagnosis — Expert System</h1>
+  <p>Choose symptoms and click <strong>Diagnose</strong>.</p>
+  <form id="symForm">
+    <label>Leaf color:
+      <select name="leaf_color" id="leaf_color">
+        <option value="green">green</option>
+        <option value="yellow">yellow</option>
+        <option value="brown">brown</option>
+      </select>
+    </label>
+    <label>Spots:
+      <select name="spots" id="spots">
+        <option value="no">no</option>
+        <option value="yes">yes</option>
+      </select>
+    </label>
+    <label>Wilt:
+      <select name="wilt" id="wilt">
+        <option value="no">no</option>
+        <option value="yes">yes</option>
+      </select>
+    </label>
+    <button type="submit">Diagnose</button>
+  </form>
+  <div id="output" class="result" style="display:none;"></div>
+
+  <script>
+    const form = document.getElementById('symForm');
+    const output = document.getElementById('output');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const leaf_color = document.getElementById('leaf_color').value;
+      const spots = document.getElementById('spots').value;
+      const wilt = document.getElementById('wilt').value;
+      const payload = { leaf_color, spots, wilt };
+      try {
+        const res = await fetch('/api/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        let html = '<h3>Results</h3>';
+        if (data.rules && data.rules.length>0) {
+          html += '<strong>Rule-based matches:</strong><ul>';
+          data.rules.forEach(r=>{ html += `<li>${r.disease} (confidence: ${r.confidence}) — ${r.advice}</li>`; });
+          html += '</ul>';
+        } else {
+          html += '<em>No rule matched.</em>';
+        }
+        if (data.ml) {
+          html += '<strong>ML prediction:</strong><div>' + JSON.stringify(data.ml) + '</div>';
+        }
+        output.style.display = 'block';
+        output.innerHTML = html;
+      } catch (err) {
+        output.style.display = 'block';
+        output.innerHTML = '<strong>Error:</strong> ' + err;
+      }
+    });
+  </script>
+</body>
+</html>

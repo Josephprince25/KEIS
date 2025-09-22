@@ -1,0 +1,7 @@
+leaf_color,spots,wilt,disease
+yellow,yes,no,Leaf Spot
+brown,yes,yes,Bacterial Wilt
+green,no,no,Healthy
+yellow,no,no,Nutrient Deficiency
+brown,no,yes,Root Rot
+green,yes,yes,Viral Infection
